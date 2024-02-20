@@ -4,11 +4,11 @@ It provides an simple option to in-place translate a message of a YouTube live c
 By clicking on "Translate" again after it has been translated, the original message will be shown again.
 
 ---
-# Installation
-## Quick:
+## Installation
+### Quick:
 1. Install Tampermonkey | [Google Chrome](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) | [Firefox](https://addons.mozilla.org/firefox/addon/tampermonkey)
 2. Click [Install](https://github.com/Ponkhy/Piplator/raw/main/piplator.user.js) here
-## Alternative:
+### Alternative:
 1. Open the **piplator.user.js** script in this repo.
 2. Click the **Raw** button at the top of the file to view it's code
 3. Copy the source code
