@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Piplator
 // @namespace    https://github.com/Ponkhy/Piplator
-// @version      1.0.0
+// @version      1.1.0
 // @description  Provides the option to in-place translate a message of a YouTube live chat
 // @author       Ponkhy
 // @match        https://www.youtube.com/*
@@ -15,9 +15,14 @@
 (function() {
     'use strict';
 
+    // Add your Google Translation API key
     const API_KEY = "";
+    // Change target language, defaults to English
+    // String must be an ISO-639-Code | https://cloud.google.com/translate/docs/languages
     const TARGET_LANGUAGE = "en";
 
+
+    const history = [];
 
     function addButtonToMessage(messageElement) {
         if (!messageElement.querySelector('.message-button')) {
@@ -39,7 +44,23 @@
 
                 const messageTextElement = messageElement.querySelector('#message');
 
-                handleButtonClick(messageTextElement);
+                const checkMessage = history.filter(message => (
+                    message.prevText.includes(messageTextElement.innerText) || message.translatedText.includes(messageTextElement.innerText)
+                ));
+
+                switch (messageTextElement.innerText) {
+                    case checkMessage[0]?.prevText: {
+                        messageTextElement.innerText = checkMessage[0].translatedText;
+                        break;
+                    }
+                    case checkMessage[0]?.translatedText: {
+                        messageTextElement.innerText = checkMessage[0].prevText;
+                        break;
+                    }
+                    default: {
+                        handleButtonClick(messageTextElement);
+                    }
+                }
             });
 
             messageElement.appendChild(button);
@@ -71,14 +92,14 @@
     }
 
     async function handleButtonClick(message) {
+        const innerText = message.innerText.replace(/^\s+|\s+$/gm,'');
+
         GM.xmlHttpRequest ({
             method:     "POST",
             url:        `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-            data:       JSON.stringify({ q: message.innerText, target: TARGET_LANGUAGE }),
+            data:       JSON.stringify({ q: innerText, target: TARGET_LANGUAGE }),
             headers:    { "Content-Type": "application/json" },
             onload: function (r) {
-                const prevText = message.innerText;
-
                 const { data } = JSON.parse(r.response);
                 const translatedText = data.translations[0].translatedText;
                 const sourceLanguage = data.translations[0].detectedSourceLanguage;
@@ -87,7 +108,9 @@
 
                 message.innerText = convertedText;
 
-                console.log(`Translated text from "${prevText}" to "${convertedText}" | Detected source language: ${sourceLanguage}`);
+                history.push({ prevText: innerText, translatedText: convertedText });
+
+                console.log(`Translated text from "${innerText}" to "${convertedText}" | Detected source language: ${sourceLanguage}`);
             }
         }).catch(e => console.error(e));
     }
