@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         Piplator
 // @namespace    https://github.com/Ponkhy/Piplator
-// @version      1.1.0
+// @version      1.1.1
 // @description  Provides the option to in-place translate a message of a YouTube live chat
 // @author       Ponkhy
 // @match        https://www.youtube.com/*
 // @icon         https://www.youtube.com/favicon.ico
 // @grant        GM.xmlHttpRequest
 // @connect      translation.googleapis.com
-// @downloadURL  https://github.com/Ponkhy/Piplator/raw/main/piplator.js
-// @updateURL    https://github.com/Ponkhy/Piplator/raw/main/piplator.js
+// @downloadURL  https://github.com/Ponkhy/Piplator/raw/main/piplator.user.js
+// @updateURL    https://github.com/Ponkhy/Piplator/raw/main/piplator.user.js
 // ==/UserScript==
 
 (function() {
