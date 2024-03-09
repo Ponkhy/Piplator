@@ -22,5 +22,5 @@ To get an API key you can follow this [tutorial](https://locoaddon.com/how-to-ge
 It's also possible to change the target language at **line 22**, the string must be in ISO-639. You can find the supported list of languages and codes in [Google's Docs](https://cloud.google.com/translate/docs/languages).
 
 ---
-### Current Issues
+### Known Issues
 - Unicode emotes will be removed in the translation process
